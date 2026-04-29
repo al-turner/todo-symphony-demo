@@ -1,6 +1,7 @@
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+STE-7 verifies GitHub PR creation with a one-line README change.
 
 Currently, two official plugins are available:
 
