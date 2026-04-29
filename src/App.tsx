@@ -5,6 +5,7 @@ import './App.css'
 type Todo = {
   id: number
   text: string
+  completed: boolean
 }
 
 function App() {
@@ -26,16 +27,22 @@ function App() {
       {
         id: Date.now(),
         text,
+        completed: false,
       },
     ])
     setTodoText('')
   }
 
-  function handleComplete(id: number) {
+  function handleToggle(id: number) {
     setTodos((currentTodos) =>
-      currentTodos.filter((todo) => todo.id !== id),
+      currentTodos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
     )
   }
+
+  const openTodos = todos.filter((todo) => !todo.completed)
+  const completedTodos = todos.filter((todo) => todo.completed)
 
   return (
     <main className="app-shell">
@@ -65,23 +72,60 @@ function App() {
         </form>
 
         <div className="todo-panel" aria-live="polite">
-          {todos.length === 0 ? (
-            <p className="empty-state">No TODOs yet</p>
-          ) : (
-            <ul className="todo-list">
-              {todos.map((todo) => (
-                <li key={todo.id} className="todo-item">
-                  <label>
-                    <input
-                      type="checkbox"
-                      onChange={() => handleComplete(todo.id)}
-                    />
-                    <span>{todo.text}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          )}
+          <section className="todo-section" aria-labelledby="todo-open-title">
+            <div className="section-header">
+              <h2 id="todo-open-title">Open</h2>
+              <span>{openTodos.length}</span>
+            </div>
+
+            {openTodos.length === 0 ? (
+              <p className="empty-state">No open TODOs</p>
+            ) : (
+              <ul className="todo-list">
+                {openTodos.map((todo) => (
+                  <li key={todo.id} className="todo-item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={todo.completed}
+                        onChange={() => handleToggle(todo.id)}
+                      />
+                      <span>{todo.text}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section
+            className="todo-section"
+            aria-labelledby="todo-completed-title"
+          >
+            <div className="section-header">
+              <h2 id="todo-completed-title">Completed</h2>
+              <span>{completedTodos.length}</span>
+            </div>
+
+            {completedTodos.length === 0 ? (
+              <p className="empty-state">No completed TODOs yet</p>
+            ) : (
+              <ul className="todo-list">
+                {completedTodos.map((todo) => (
+                  <li key={todo.id} className="todo-item todo-item--completed">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={todo.completed}
+                        onChange={() => handleToggle(todo.id)}
+                      />
+                      <span>{todo.text}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
         </div>
       </section>
     </main>

@@ -46,8 +46,11 @@ try {
   await page.goto(appUrl, { waitUntil: 'networkidle' })
   await page
     .getByRole('textbox', { name: /new todo/i })
-    .fill('Verify Playwright screenshot')
+    .fill('Open todo')
   await page.getByRole('button', { name: /add todo/i }).click()
+  await page.getByRole('textbox', { name: /new todo/i }).fill('Completed todo')
+  await page.getByRole('button', { name: /add todo/i }).click()
+  await page.getByRole('checkbox', { name: 'Completed todo' }).check()
   await page.screenshot({ path: screenshotPath, fullPage: true })
 
   await context.close()
