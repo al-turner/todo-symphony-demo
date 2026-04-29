@@ -89,7 +89,36 @@
 
 .todo-panel {
   margin-top: 24px;
-  min-height: 72px;
+  display: grid;
+  gap: 20px;
+}
+
+.todo-section {
+  display: grid;
+  gap: 12px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.section-header span {
+  min-width: 2rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(122, 92, 255, 0.1);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .empty-state {
@@ -132,6 +161,15 @@
 .todo-item span {
   color: var(--text-h);
   word-break: break-word;
+}
+
+.todo-item--completed {
+  background: rgba(122, 92, 255, 0.06);
+}
+
+.todo-item--completed span {
+  text-decoration: line-through;
+  color: var(--text);
 }
 
 .sr-only {
